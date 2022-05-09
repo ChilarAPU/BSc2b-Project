@@ -7,8 +7,10 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Components/CircularThrobber.h"
 #include "Components/EditableTextBox.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "Types/SlateEnums.h"
 
@@ -20,6 +22,9 @@ void UComputerScreenWidget::NativeConstruct()
 
 	//default value
 	TargetPassword = "0123"; //Should get changed in widget blueprint
+
+	LoadingIcon->SetVisibility(ESlateVisibility::Hidden);
+	WelcomeText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 FReply UComputerScreenWidget::NativeOnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
@@ -57,6 +62,10 @@ void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type
 	{
 		//Password is correct
 		UE_LOG(LogTemp, Warning, TEXT("Correct"));
+		Exit->SetVisibility(ESlateVisibility::Hidden);
+		Password->SetVisibility(ESlateVisibility::Hidden);
+		LoadingIcon->SetVisibility(ESlateVisibility::Visible);
+		WelcomeText->SetVisibility(ESlateVisibility::Visible);
 	} else
 	{
 		//Password is incorrect

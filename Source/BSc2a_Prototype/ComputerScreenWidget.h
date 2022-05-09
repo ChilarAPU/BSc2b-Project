@@ -33,6 +33,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UImage* ComputerCursor;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UCircularThrobber* LoadingIcon;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* WelcomeText;
+
 	/* the password the player is trying to match/find scattered around the room
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

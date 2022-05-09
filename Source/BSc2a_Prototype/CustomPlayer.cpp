@@ -4,6 +4,7 @@
 #include "CustomPlayer.h"
 
 #include "BaseWeighingObject.h"
+#include "BSc2a_PrototypeGameModeBase.h"
 #include "ComputerMinigame.h"
 #include "DrawDebugHelpers.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -127,7 +128,12 @@ void ACustomPlayer::MoveRight(float Axis)
 	{
 		AddMovementInput(GetActorRightVector(), Axis);
 		
-		MoveCameraTilt(Axis);
+		ABSc2a_PrototypeGameModeBase* GameMode = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+		if (GameMode->bTiltCameraWhenMoving)
+		{
+			MoveCameraTilt(Axis);
+		}
+		
 	}
 }
 

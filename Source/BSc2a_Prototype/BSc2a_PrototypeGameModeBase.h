@@ -13,9 +13,11 @@ UCLASS()
 class BSC2A_PROTOTYPE_API ABSc2a_PrototypeGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-
+	
 public:
 	//Used to decide which note should be spawned in. Used in ABaseNoteClass.cpp
 	int AmountOfNotesSpawned;
-	
+
+	//A accessibility feature as during testing, comments were made about the tilting causing motion sickness
+	bool bTiltCameraWhenMoving = true;
 };

@@ -212,7 +212,6 @@ void ACustomPlayer::Interact()
 			else if (AWeighingMinigame* Weigh = Cast<AWeighingMinigame>(OutHit.GetActor()))
 			{
 				ChangeViewTarget(Weigh, PlayerC);
-				
 				//Change input mode for only this interaction as it needs the mouse cursor events
 				FInputModeGameAndUI AllowCursor;
 				PlayerC->SetInputMode(AllowCursor);
@@ -253,6 +252,7 @@ void ACustomPlayer::LineTraceFromCamera(FHitResult& OutHit)
 	FVector StartLocation = Camera->GetComponentLocation();
 	FVector EndLocation = StartLocation + Camera->GetForwardVector() * LineTraceLength;
 	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this);
 	GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, ECC_Visibility, CollisionParams);
 	
 	//Remove during building as its only for debugging

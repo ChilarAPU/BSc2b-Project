@@ -32,6 +32,8 @@ public:
 	int TimeRemainingSeconds;
 	int TimeRemainingMinutes;
 
+	bool bShouldClockBeCounting;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

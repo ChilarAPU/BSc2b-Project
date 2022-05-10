@@ -23,6 +23,7 @@ AInGameTimer::AInGameTimer()
 	TimeRemaining = 0; //should be overridden in blueprints
 	TimeRemainingMinutes = 0;
 	TimeRemainingSeconds = 0;
+	bShouldClockBeCounting = true;
 
 }
 
@@ -38,7 +39,11 @@ void AInGameTimer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SetTimerText(DeltaTime);
+	if (bShouldClockBeCounting)
+	{
+		SetTimerText(DeltaTime);
+	}
+	
 
 }
 
@@ -52,5 +57,11 @@ void AInGameTimer::SetTimerText(float DeltaTime)
     TimeRemainingSeconds = TimeRemaining - (TimeRemainingMinutes * 60);
 	//Display it onto the text widget
     TimerText->SetText(FText(FText::FromString(FString(FString::FromInt(TimeRemainingMinutes)) + " : " + FString::FromInt(TimeRemainingSeconds))));
+	
+	if (TimeRemainingMinutes == 0 && TimeRemainingSeconds == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ENd"));
+		bShouldClockBeCounting = false;
+	}
 }
 

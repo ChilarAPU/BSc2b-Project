@@ -20,4 +20,12 @@ public:
 
 	//A accessibility feature as during testing, comments were made about the tilting causing motion sickness
 	bool bTiltCameraWhenMoving = true;
+
+	//Easy way to know when the player has completed all mini-games. Amount will always be the same regardless of playthrough
+	//Blueprintable to allow davids work to interact with it
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int AmountOfMinigamesCompleted;
+
+	UFUNCTION(BlueprintCallable)
+	void AddToMinigameAmount();
 };

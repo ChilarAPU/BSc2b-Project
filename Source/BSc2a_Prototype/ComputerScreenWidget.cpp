@@ -3,6 +3,7 @@
 
 #include "ComputerScreenWidget.h"
 
+#include "BSc2a_PrototypeGameModeBase.h"
 #include "CustomPlayer.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/Button.h"
@@ -53,6 +54,9 @@ void UComputerScreenWidget::ExitComputer()
 	PlayerC->SetInputMode(GameOpen);
 	
 	PlayerPawn->ChangeViewTarget(PlayerPawn, PlayerC);
+
+	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GM->AddToMinigameAmount();
 }
 
 void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type InCommit)

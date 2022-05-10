@@ -3,6 +3,7 @@
 
 #include "WeighingMinigame.h"
 
+#include "BSc2a_PrototypeGameModeBase.h"
 #include "CustomPlayer.h"
 #include "Components/BoxComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -53,6 +54,9 @@ void AWeighingMinigame::ResetCamera(ACustomPlayer* IncomingPlayer)
 	PlayerC->SetInputMode(GameOpen);
 	
 	PlayerPawn->ChangeViewTarget(PlayerPawn, PlayerC);
+
+	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GM->AddToMinigameAmount();
 }
 
 void AWeighingMinigame::BeginPlay()

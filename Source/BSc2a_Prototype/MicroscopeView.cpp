@@ -3,6 +3,7 @@
 
 #include "MicroscopeView.h"
 
+#include "BSc2a_PrototypeGameModeBase.h"
 #include "CustomPlayer.h"
 #include "MicroscopeBackground.h"
 #include "MicroscopeMicrobe.h"
@@ -81,7 +82,7 @@ void UMicroscopeView::OnBlurValueChange(float InValue)
 
 void UMicroscopeView::ExitView()
 {
-	ResetView();
+	//ResetView();
 	//currently just removes it from view. Would like to change it so that insted of deleting it, I hide
 	//the viewport so that if the player comes back, everything is still how it was.
 }
@@ -98,6 +99,9 @@ void UMicroscopeView::ResetView()
 	PlayerC->SetInputMode(GameOpen);
 	
 	PlayerPawn->ChangeViewTarget(PlayerPawn, PlayerC);
+
+	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GM->AddToMinigameAmount();
 }
 
 FReply UMicroscopeView::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

@@ -55,7 +55,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float MaxGrabDistance = 100;
+	float MaxGrabDistance = 300;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float HoldDistance = 100;
 

@@ -27,6 +27,10 @@ ABaseNoteClass::ABaseNoteClass()
 	Note3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Note3"));
 	Note3->SetupAttachment(RootComp);
 	Note3->SetCollisionProfileName(TEXT("PhysicsActor"));
+	
+	Note4 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Note4"));
+	Note4->SetupAttachment(RootComp);
+	Note4->SetCollisionProfileName(TEXT("PhysicsActor"));
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +63,9 @@ void ABaseNoteClass::ShowCorrectNote()
 		break;
 	case 3:
 		Note3->SetHiddenInGame(false);
+		break;
+	case 4:
+		Note4->SetHiddenInGame(false);
 		break;
 	default:
 		//Used if we try and spawn a fourth or higher note into the world

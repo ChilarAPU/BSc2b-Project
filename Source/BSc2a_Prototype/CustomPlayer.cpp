@@ -15,6 +15,7 @@
 #include "MainMenu.h"
 #include "MicroscopeMinigame.h"
 #include "WeighingMinigame.h"
+#include "Components/TextBlock.h"
 #include "Components/TextRenderComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
@@ -197,6 +198,8 @@ void ACustomPlayer::MainMenuPressed()
 		} else
 		{
 			MainMenuRef = Cast<UMainMenu>(CreateWidget(GetWorld(), MainMenu));
+			FString Text = "PAUSED";
+			MainMenuRef->Title->SetText(FText::FromString(Text));
 			MainMenuRef->AddToViewport();
 			PlayerC->SetIgnoreMoveInput(true);
 			FInputModeGameAndUI GameAndUIMode;

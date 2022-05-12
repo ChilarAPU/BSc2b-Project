@@ -15,7 +15,18 @@ void UMainMenu::NativeConstruct()
 
 	StartButton->OnClicked.AddDynamic(this, &UMainMenu::StartGame);
 	SettingsButton->OnClicked.AddDynamic(this, &UMainMenu::SettingsPage);
+	QuitButton->OnClicked.AddDynamic(this, &UMainMenu::QuitGame);
 	BobbingCheck->OnCheckStateChanged.AddDynamic(this, &UMainMenu::BobbingCheckChange);
+
+	//Make Checkbox visually match up with the gamemodes variable
+	ABSc2a_PrototypeGameModeBase* GameMode = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (GameMode->bTiltCameraWhenMoving)
+	{
+		BobbingCheck->SetCheckedState(ECheckBoxState::Checked);
+	} else if (GameMode->bTiltCameraWhenMoving == false)
+	{
+		BobbingCheck->SetCheckedState(ECheckBoxState::Unchecked);
+	}
 }
 
 void UMainMenu::StartGame()
@@ -47,6 +58,11 @@ void UMainMenu::SettingsPage()
 		BobbingCheck->SetVisibility(ESlateVisibility::Hidden);
 	}
 	
+}
+
+void UMainMenu::QuitGame()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), UGameplayStatics::GetPlayerController(GetWorld(), 0), EQuitPreference::Quit, true);
 }
 
 void UMainMenu::BobbingCheckChange(bool Incoming)

@@ -32,6 +32,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* DirectPlayerText;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<class UEndScreen> EndScreen;
+
+	UPROPERTY()
+	UEndScreen* EndScreenRef;
+
 	UPROPERTY()
 	bool bALlowWin;
 

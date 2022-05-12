@@ -34,6 +34,9 @@ public:
 
 	bool bShouldClockBeCounting;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UEndScreen> LoseScreen;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

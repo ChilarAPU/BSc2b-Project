@@ -3,6 +3,7 @@
 
 #include "DialogueWidget.h"
 
+#include "EndScreen.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,6 +25,11 @@ void UDialogueWidget::NativeConstruct()
 	bALlowWin = false;
 	StringIndex = 0;
 	TextSpeed = .05f;
+
+	if (EndScreen)
+	{
+		EndScreenRef= Cast<UEndScreen>(CreateWidget(GetWorld(), EndScreen));
+	}
 	
 }
 
@@ -40,6 +46,11 @@ void UDialogueWidget::EscapeClicked()
 
 void UDialogueWidget::EndClicked()
 {
+	if (EndScreenRef)
+	{
+		EndScreenRef->AddToViewport();
+		EndScreenRef->LoseScreen->SetVisibility(ESlateVisibility::Visible);
+	}
 	
 }
 
@@ -47,7 +58,12 @@ void UDialogueWidget::WinClicked()
 {
 	if (bALlowWin)
 	{
-		InputText = "Win";
+		if (EndScreenRef)
+		{
+			EndScreenRef->AddToViewport();
+			EndScreenRef->WinScreen->SetVisibility(ESlateVisibility::Visible);	
+		}
+		
 		//Simple delegate to set off DisplayText() every so many seconds
 		TextAnim = UKismetSystemLibrary::K2_SetTimer(this, "DisplayText", TextSpeed, true);
 	} else

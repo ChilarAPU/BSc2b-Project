@@ -2,6 +2,10 @@
 
 
 #include "InGameTimer.h"
+
+#include "EndScreen.h"
+#include "Blueprint/UserWidget.h"
+#include "Components/Image.h"
 #include "Components/TextRenderComponent.h"
 
 // Sets default values
@@ -60,8 +64,14 @@ void AInGameTimer::SetTimerText(float DeltaTime)
 	
 	if (TimeRemainingMinutes == 0 && TimeRemainingSeconds == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ENd"));
-		bShouldClockBeCounting = false;
+		if (LoseScreen)
+		{
+			UEndScreen* Local = Cast<UEndScreen>(CreateWidget(GetWorld(), LoseScreen));
+			Local->AddToViewport();
+			Local->LoseScreen->SetVisibility(ESlateVisibility::Visible);
+			bShouldClockBeCounting = false;
+		}
+		
 	}
 }
 

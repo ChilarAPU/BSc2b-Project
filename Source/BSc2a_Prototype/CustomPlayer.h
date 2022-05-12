@@ -113,6 +113,14 @@ public:
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UDialogueWidget> DialogueUI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UMainMenu> MainMenu;
+
+	bool MainMenuOpen;
+
+	UPROPERTY()
+	UMainMenu* MainMenuRef;
 		
 protected:
 	// Called when the game starts or when spawned
@@ -130,6 +138,9 @@ public:
 	void MoveRight(float Axis);
 	void MouseMoveX(float Axis);
 	void MouseMoveY(float Axis);
+
+	UFUNCTION()
+	void MainMenuPressed();
 
 	void RotateObject();
 

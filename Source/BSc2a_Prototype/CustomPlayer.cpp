@@ -12,6 +12,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "EndGoal.h"
 #include "Grabber.h"
+#include "MainMenu.h"
 #include "MicroscopeMinigame.h"
 #include "WeighingMinigame.h"
 #include "Components/TextRenderComponent.h"
@@ -49,6 +50,7 @@ ACustomPlayer::ACustomPlayer()
 	NumberOfTasksCompleted = 0;
 	bRotateObject = false;
 	GetCharacterMovement()->MaxWalkSpeed = 200;
+	MainMenuOpen = false;
 }
 
 void ACustomPlayer::TimelineProgress(float Value)
@@ -112,6 +114,7 @@ void ACustomPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAction("Grab", IE_Released, this, &ACustomPlayer::Release);
 	PlayerInputComponent->BindAction("RotateObject", IE_Pressed, this, &ACustomPlayer::RotateObject);
 	PlayerInputComponent->BindAction("RotateObject", IE_Released, this, &ACustomPlayer::RotateObject);
+	PlayerInputComponent->BindAction("MainMenu", IE_Pressed, this, &ACustomPlayer::MainMenuPressed);
 }
 
 void ACustomPlayer::MoveForward(float Axis)
@@ -176,6 +179,33 @@ void ACustomPlayer::MouseMoveY(float Axis)
 		PhysicsHandle->SetTargetRotation(tempRot);
 	}
 	
+}
+
+void ACustomPlayer::MainMenuPressed()
+{
+	if (MainMenu)
+	{
+		APlayerController* PlayerC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		if (MainMenuOpen)
+		{
+			MainMenuRef->RemoveFromParent();
+			PlayerC->SetIgnoreMoveInput(false);
+			FInputModeGameOnly GameMode;
+			PlayerC->SetShowMouseCursor(false);
+			PlayerC->SetInputMode(GameMode);
+			MainMenuOpen = false;
+		} else
+		{
+			MainMenuRef = Cast<UMainMenu>(CreateWidget(GetWorld(), MainMenu));
+			MainMenuRef->AddToViewport();
+			PlayerC->SetIgnoreMoveInput(true);
+			FInputModeGameAndUI GameAndUIMode;
+			PlayerC->SetShowMouseCursor(true);
+			PlayerC->SetInputMode(GameAndUIMode);
+			MainMenuOpen = true;
+		}
+		
+	}
 }
 
 void ACustomPlayer::RotateObject()

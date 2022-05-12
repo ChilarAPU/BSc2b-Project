@@ -21,7 +21,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UMainMenu> MainMenuWidget;
-	//class UMainMenu* MainMenuWidget;
 
 protected:
 	// Called when the game starts or when spawned

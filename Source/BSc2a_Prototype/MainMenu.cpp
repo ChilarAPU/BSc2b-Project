@@ -31,6 +31,8 @@ void UMainMenu::StartGame()
 	FInputModeGameOnly GameMode;
 	PlayerC->SetShowMouseCursor(false);
 	PlayerC->SetInputMode(GameMode);
+	//Allow player to spawn this widget whenever it wants
+	Player->MainMenuOpen = false;
 }
 
 void UMainMenu::SettingsPage()

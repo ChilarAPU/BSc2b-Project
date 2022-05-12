@@ -94,6 +94,7 @@ void AWeighingMinigame::ChangeScaleAmount(float Weight, UClass* IncomingClass)
 			TableOfObjectWeight.Add(IncomingClass, Weight);
 		}
 
+		UE_LOG(LogTemp, Warning, TEXT("%f"), TableOfObjectWeight[IncomingClass]);
 		//Timeline specific functionality
 		FOnTimelineFloat TimelineProgress;
 		TimelineProgress.BindUFunction(this, FName("TextTimelineProgress"));
@@ -124,6 +125,13 @@ void AWeighingMinigame::RemoveWeight(float Weight, UClass* IncomingClass)
 	
 	if (TextFloat)
 	{
+		if (TableOfObjectWeight.Contains(IncomingClass))
+		{
+			float i = 0;
+			TableOfObjectWeight.RemoveAndCopyValue(IncomingClass, i);
+			TableOfObjectWeight.Add(IncomingClass, i - Weight);
+		}
+		
 		FOnTimelineFloat TimelineProgress;
 		TimelineProgress.BindUFunction(this, FName("TextTimelineProgress"));
 		TextTimeline.AddInterpFloat(TextFloat, TimelineProgress);

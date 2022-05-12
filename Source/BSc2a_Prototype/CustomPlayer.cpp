@@ -318,7 +318,7 @@ void ACustomPlayer::Grab()
 			} else
 			{
 				//Bring the object closer to the camera to visibly show that the item has been picked up
-				Obj->SetActorLocation(FVector(OutHit.Location.X, OutHit.Location.Y, Obj->GetActorLocation().Z + 2));
+				Obj->SetActorLocation(FVector(OutHit.Location.X, OutHit.Location.Y, Obj->GetActorLocation().Z + 12));
 				Obj->bBeingClicked = true;
 				Obj->bHitObject = false;
 			}

@@ -81,6 +81,8 @@ void ACustomPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	StartingRollValue = Camera->GetComponentRotation().Roll;
+
+	
 	
 }
 

@@ -115,7 +115,8 @@ void ACustomPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAction("Grab", IE_Released, this, &ACustomPlayer::Release);
 	PlayerInputComponent->BindAction("RotateObject", IE_Pressed, this, &ACustomPlayer::RotateObject);
 	PlayerInputComponent->BindAction("RotateObject", IE_Released, this, &ACustomPlayer::RotateObject);
-	PlayerInputComponent->BindAction("MainMenu", IE_Pressed, this, &ACustomPlayer::MainMenuPressed);
+	FInputActionBinding& Toggle =  PlayerInputComponent->BindAction("MainMenu", IE_Pressed, this, &ACustomPlayer::MainMenuPressed);
+	Toggle.bExecuteWhenPaused = true;
 }
 
 void ACustomPlayer::MoveForward(float Axis)
@@ -189,6 +190,7 @@ void ACustomPlayer::MainMenuPressed()
 		APlayerController* PlayerC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 		if (MainMenuOpen)
 		{
+			UGameplayStatics::SetGamePaused(GetWorld(), false);
 			MainMenuRef->RemoveFromParent();
 			PlayerC->SetIgnoreMoveInput(false);
 			FInputModeGameOnly GameMode;

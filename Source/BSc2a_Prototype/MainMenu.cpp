@@ -27,12 +27,15 @@ void UMainMenu::NativeConstruct()
 	{
 		BobbingCheck->SetCheckedState(ECheckBoxState::Unchecked);
 	}
+
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
 void UMainMenu::StartGame()
 {
 	ACustomPlayer* Player = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	APlayerController* PlayerC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
 	FViewTargetTransitionParams Params;
 	Params.BlendTime = 1.f;
 	Params.BlendFunction = VTBlend_EaseInOut;

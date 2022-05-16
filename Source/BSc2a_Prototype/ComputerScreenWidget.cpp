@@ -26,6 +26,7 @@ void UComputerScreenWidget::NativeConstruct()
 
 	LoadingIcon->SetVisibility(ESlateVisibility::Hidden);
 	WelcomeText->SetVisibility(ESlateVisibility::Hidden);
+	IncorrectText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 FReply UComputerScreenWidget::NativeOnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
@@ -59,6 +60,11 @@ void UComputerScreenWidget::ExitComputer()
 	GM->AddToMinigameAmount();
 }
 
+void UComputerScreenWidget::IncorrectDisapear()
+{
+	IncorrectText->SetVisibility(ESlateVisibility::Hidden);
+}
+
 void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type InCommit)
 {
 	const FString Input = InText.ToString();
@@ -73,7 +79,9 @@ void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type
 	} else
 	{
 		//Password is incorrect
-		UE_LOG(LogTemp, Warning, TEXT("Wrong"));
+		IncorrectText->SetVisibility(ESlateVisibility::Visible);
+		FTimerHandle UnusedHandle;
+		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &UComputerScreenWidget::IncorrectDisapear, 2.f, false);
 	}
 }
 

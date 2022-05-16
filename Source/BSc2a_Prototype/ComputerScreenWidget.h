@@ -39,6 +39,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* WelcomeText;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* IncorrectText;
+
 	/* the password the player is trying to match/find scattered around the room
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -48,6 +51,10 @@ public:
 	UFUNCTION()
 	void ExitComputer();
 
+	//Timer function to hide the incorrect text after a set amount of time
+	UFUNCTION()
+	void IncorrectDisapear();
+	
 	//Function for when the player presses the enter or return key when typing in the password
 	UFUNCTION()
 	void PasswordCheck(const FText& InText, ETextCommit::Type InCommit);

@@ -14,6 +14,7 @@
 #include "Grabber.h"
 #include "MainMenu.h"
 #include "MicroscopeMinigame.h"
+#include "MicroscopeView.h"
 #include "WeighingMinigame.h"
 #include "Components/TextBlock.h"
 #include "Components/TextRenderComponent.h"
@@ -236,13 +237,18 @@ void ACustomPlayer::Interact()
 		
 		if (Cast<AInteractableBaseClass>(OutHit.GetActor()))
 		{
+			ABSc2a_PrototypeGameModeBase* GameMode = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 			//Code relevant to all interactions goes here
-			GetCharacterMovement()->Velocity = FVector();
-			PlayerC->SetIgnoreMoveInput(true);
-			FInputModeUIOnly DialougeOpen;
-			DialougeOpen.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-			PlayerC->SetShowMouseCursor(true);
-			PlayerC->SetInputMode(DialougeOpen);
+			if (!GameMode->bHasPlayerBeatMicroscope)
+			{
+				GetCharacterMovement()->Velocity = FVector();
+				PlayerC->SetIgnoreMoveInput(true);
+				FInputModeUIOnly DialougeOpen;
+				DialougeOpen.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+				PlayerC->SetShowMouseCursor(true);
+				PlayerC->SetInputMode(DialougeOpen);
+			}
+			
 			
 			if (Cast<AEndGoal>(OutHit.GetActor()))
 			{
@@ -261,10 +267,15 @@ void ACustomPlayer::Interact()
 			}
 			else if (AMicroscopeMinigame* Micro = Cast<AMicroscopeMinigame>(OutHit.GetActor()))
 			{
-				ChangeViewTarget(Micro, PlayerC);
-				//Wait for the amount of time the camera blend takes to finish, then run the function
-				Micro->TimerDel.BindUFunction(Micro, FName("SpawnWidget"), PlayerC);
-				GetWorld()->GetTimerManager().SetTimer(Micro->TimerHandle, Micro->TimerDel, .5f, false);
+				if (!GameMode->bHasPlayerBeatMicroscope)
+				{
+					ChangeViewTarget(Micro, PlayerC);
+					//Wait for the amount of time the camera blend takes to finish, then run the function
+					Micro->TimerDel.BindUFunction(Micro, FName("SpawnWidget"), PlayerC);
+					GetWorld()->GetTimerManager().SetTimer(Micro->TimerHandle, Micro->TimerDel, .5f, false);
+				}
+				
+				
 			}
 		}
 	}

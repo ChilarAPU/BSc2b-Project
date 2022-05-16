@@ -28,8 +28,10 @@ void AMicroscopeMinigame::SpawnWidget(APlayerController* PlayerC)
 {
 	if (IsValid(UI))
 	{
+		
 		UMicroscopeView* LocalUI = CreateWidget<UMicroscopeView>(PlayerC, UI);
 		LocalUI->AddToViewport();
+		
 	}
 }
 

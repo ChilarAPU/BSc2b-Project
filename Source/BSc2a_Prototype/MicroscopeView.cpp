@@ -35,7 +35,7 @@ void UMicroscopeView::NativeConstruct()
 	//UCanvasPanelSlot* CP = UWidgetLayoutLibrary::SlotAsCanvasSlot(MainView);
 	//MaxSize = CP->GetSize();
 
-	AmountOfMicrobesToSpawn = 10;
+	AmountOfMicrobesToSpawn = 50;
 	MicrobesRemoved = 0;
 	bMouseHeld = false;
 	
@@ -44,7 +44,7 @@ void UMicroscopeView::NativeConstruct()
 		UMicroscopeMicrobe* NewMicrobe = CreateWidget<UMicroscopeMicrobe>(this, Microbe->GetClass());
 		NewMicrobe->AddToViewport();
 		//temp way to create a bad microbe
-		if (i == 5)
+		if (i % 10 == 0)
 		{
 			NewMicrobe->bIsBad = true;
 		}
@@ -102,6 +102,7 @@ void UMicroscopeView::ResetView()
 
 	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	GM->AddToMinigameAmount();
+	GM->bHasPlayerBeatMicroscope = true;
 }
 
 FReply UMicroscopeView::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

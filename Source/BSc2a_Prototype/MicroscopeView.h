@@ -34,7 +34,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ExitButton;
-	
 
 	//This will hold the value at which the microscope is no longer blurry. Will be between 0 - 1
 	UPROPERTY()

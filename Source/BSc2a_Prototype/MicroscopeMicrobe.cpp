@@ -118,7 +118,7 @@ void UMicroscopeMicrobe::MicrobePress(const FGeometry& Geometry, const FPointerE
 	{
 		GetVisibleMicrobe()->SetOpacity(0);
 		Parent->MicrobesRemoved++;
-		if (Parent->MicrobesRemoved == 1)
+		if (Parent->MicrobesRemoved == 5)
 		{
 			Parent->ResetView();
 		}

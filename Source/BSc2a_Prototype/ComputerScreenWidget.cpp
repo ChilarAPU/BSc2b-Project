@@ -68,6 +68,11 @@ void UComputerScreenWidget::IncorrectDisapear()
 void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type InCommit)
 {
 	const FString Input = InText.ToString();
+	//Even if onenter is the one we want, this would cause 2 events to be run at the same time
+	if (InCommit == ETextCommit::Type::OnEnter)
+	{
+		return;
+	}
 	if (Input == TargetPassword)
 	{
 		//Password is correct

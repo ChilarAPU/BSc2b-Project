@@ -22,6 +22,21 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UImage* Microbe;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Microbe2;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Microbe3;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Microbe4;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Microbe5;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* Microbe6;
+
 	bool bIsBad;
 
 	FVector2D MaxSize;
@@ -37,6 +52,8 @@ public:
 	//Holds the parent widget. This case is MicroscopeView
 	UPROPERTY()
 	class UMicroscopeView* Parent;
+
+	class UImage* GetVisibleMicrobe();
 
 	UFUNCTION()
 	void MicrobePress(const FGeometry& Geometry, const FPointerEvent& MouseEvent);

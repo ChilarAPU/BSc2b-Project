@@ -65,11 +65,11 @@ void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type
 	if (Input == TargetPassword)
 	{
 		//Password is correct
-		UE_LOG(LogTemp, Warning, TEXT("Correct"));
 		Exit->SetVisibility(ESlateVisibility::Hidden);
 		Password->SetVisibility(ESlateVisibility::Hidden);
 		LoadingIcon->SetVisibility(ESlateVisibility::Visible);
 		WelcomeText->SetVisibility(ESlateVisibility::Visible);
+		ExitComputer();
 	} else
 	{
 		//Password is incorrect

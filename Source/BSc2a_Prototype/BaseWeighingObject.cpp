@@ -20,6 +20,7 @@ ABaseWeighingObject::ABaseWeighingObject()
 	Weight = 0;
 	bBeingClicked = false;
 	bRemoveWeight = false;
+	bCanBePickedUp = false;
 }
 
 // Called when the game starts or when spawned

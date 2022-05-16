@@ -3,6 +3,7 @@
 
 #include "WeighingMinigame.h"
 
+#include "BaseWeighingObject.h"
 #include "BSc2a_PrototypeGameModeBase.h"
 #include "CustomPlayer.h"
 #include "Components/BoxComponent.h"
@@ -54,9 +55,6 @@ void AWeighingMinigame::ResetCamera(ACustomPlayer* IncomingPlayer)
 	PlayerC->SetInputMode(GameOpen);
 	
 	PlayerPawn->ChangeViewTarget(PlayerPawn, PlayerC);
-
-	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
-	GM->AddToMinigameAmount();
 }
 
 void AWeighingMinigame::BeginPlay()
@@ -94,7 +92,31 @@ void AWeighingMinigame::ChangeScaleAmount(float Weight, UClass* IncomingClass)
 			TableOfObjectWeight.Add(IncomingClass, Weight);
 		}
 
-		UE_LOG(LogTemp, Warning, TEXT("%f"), TableOfObjectWeight[IncomingClass]);
+		//
+		if (TableOfObjectWeight[IncomingClass] == GoalObjectWeight[IncomingClass])
+		{
+			TArray<AActor*> temp;
+			UGameplayStatics::GetAllActorsOfClass(GetWorld(), IncomingClass, temp);
+			GoalObjectWeight.FindAndRemoveChecked(IncomingClass);
+			//Removes all actors of the class from the level. This shows to the player that they have got the amount correct
+			for (int i = 0; i < temp.Num(); i++)
+			{
+				ABaseWeighingObject* Ob = Cast<ABaseWeighingObject>(temp[i]);
+				Ob->bCanBePickedUp = true;
+			}
+		}
+
+		//Check whether or not we still need more ingredients 
+		TArray<UClass*> temp2;
+		GoalObjectWeight.GetKeys(temp2);
+		if (temp2.Num() == 0)
+		{
+			ACustomPlayer* PL = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			ResetCamera(PL);
+			ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+			GM->AddToMinigameAmount();
+		}
+		
 		//Timeline specific functionality
 		FOnTimelineFloat TimelineProgress;
 		TimelineProgress.BindUFunction(this, FName("TextTimelineProgress"));

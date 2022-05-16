@@ -62,6 +62,10 @@ public:
 	UPROPERTY()
 	TMap<UClass*, float> TableOfObjectWeight;
 
+	//Holds the goal of the total weight of individual objects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<UClass*, float> GoalObjectWeight;
+
 	//text timeline specific
 	UFUNCTION()
 	void TextTimelineProgress(float Value);

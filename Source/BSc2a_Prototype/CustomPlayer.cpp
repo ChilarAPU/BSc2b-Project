@@ -277,7 +277,8 @@ void ACustomPlayer::SpawnDialogueUI(APlayerController* PlayerControl)
 
 		UDialogueWidget* LocalDialogueUI = CreateWidget<UDialogueWidget>(PlayerControl, DialogueUI);
 		LocalDialogueUI->AddToViewport();
-		if (NumberOfTasksCompleted == 2)
+		ABSc2a_PrototypeGameModeBase* GameMode = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+		if (GameMode->AmountOfMinigamesCompleted == 5)
 		{
 			LocalDialogueUI->bALlowWin = true;
 		}
@@ -313,17 +314,21 @@ void ACustomPlayer::Grab()
 		PlayerC->GetHitResultUnderCursor(ECC_Visibility, true, OutHit);
 		if (ABaseWeighingObject* Obj = Cast<ABaseWeighingObject>(OutHit.GetActor()))
 		{
-			if (Obj->bBeingClicked)
+			if (!Obj->bCanBePickedUp)
 			{
+			if (Obj->bBeingClicked)
+				{
 				//reset it when we place the object down
 				Obj->bBeingClicked = false;
-			} else
-			{
-				//Bring the object closer to the camera to visibly show that the item has been picked up
-				Obj->SetActorLocation(FVector(OutHit.Location.X, OutHit.Location.Y, Obj->GetActorLocation().Z + 12));
-				Obj->bBeingClicked = true;
-				Obj->bHitObject = false;
+				} else
+				{
+					//Bring the object closer to the camera to visibly show that the item has been picked up
+					Obj->SetActorLocation(FVector(OutHit.Location.X, OutHit.Location.Y, Obj->GetActorLocation().Z + 12));
+					Obj->bBeingClicked = true;
+					Obj->bHitObject = false;
+				}	
 			}
+			
 			
 		} else if (AWeighingMinigame* te = Cast<AWeighingMinigame>(OutHit.GetActor()))
 		{

@@ -27,6 +27,10 @@ public:
 	//Used to know when this object is currently being held by the player
 	bool bBeingClicked;
 
+	//Made false when the player has got the correct amount of weight on the scale. Will stop the object from being picked up again
+	UPROPERTY()
+	bool bCanBePickedUp;
+
 	//Used when placing the object back down on the table, this will the object to be placed on any surface within an
 	//acceptable amount
 	bool bHitObject;

@@ -24,53 +24,15 @@ void UMicroscopeMicrobe::NativeConstruct()
 	bIsBad = false;
 
 	Microbe->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
-	Microbe2->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
-	Microbe3->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
-	Microbe4->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
-	Microbe5->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
-	Microbe6->OnMouseButtonDownEvent.BindUFunction(this, "MicrobePress");
 
 	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>( UGameplayStatics::GetGameMode(GetWorld()));
-	if (GM)
-	{
-		switch(GM->MicrobeValue)
-		{
-		case 0: Microbe->SetVisibility(ESlateVisibility::Visible);
-			GM->MicrobeValue ++;
-			break;
-		case 1: Microbe2->SetVisibility(ESlateVisibility::Visible);
-			Microbe->SetVisibility(ESlateVisibility::Hidden);
-			GM->MicrobeValue ++;
-			break;
-		case 2: Microbe3->SetVisibility(ESlateVisibility::Visible);
-			Microbe->SetVisibility(ESlateVisibility::Hidden);
-			GM->MicrobeValue ++;
-			break;
-		case 3: Microbe4->SetVisibility(ESlateVisibility::Visible);
-			Microbe->SetVisibility(ESlateVisibility::Hidden);
-			GM->MicrobeValue ++;
-			break;
-		case 4: Microbe5->SetVisibility(ESlateVisibility::Visible);
-			Microbe->SetVisibility(ESlateVisibility::Hidden);
-			GM->MicrobeValue ++;
-			break;
-		case 5: Microbe6->SetVisibility(ESlateVisibility::Visible);
-			Microbe->SetVisibility(ESlateVisibility::Hidden);
-			GM->MicrobeValue ++;
-			break;
-		case 6: GM->MicrobeValue = 0;
-		default: break;
-		}
-	}
-	
-	
 	
 }
 
 void UMicroscopeMicrobe::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-	UCanvasPanelSlot* CanvasPanel  = UWidgetLayoutLibrary::SlotAsCanvasSlot(GetVisibleMicrobe());;
+	UCanvasPanelSlot* CanvasPanel  = UWidgetLayoutLibrary::SlotAsCanvasSlot(Microbe);;
 	FVector2D temp = CanvasPanel->GetPosition();
 	MaxSize = MyGeometry.GetLocalSize();
 	
@@ -116,7 +78,7 @@ void UMicroscopeMicrobe::MicrobePress(const FGeometry& Geometry, const FPointerE
 {
 	if (bIsBad && IsValid(Parent))
 	{
-		GetVisibleMicrobe()->SetOpacity(0);
+		Microbe->SetOpacity(0);
 		Parent->MicrobesRemoved++;
 		if (Parent->MicrobesRemoved == 5)
 		{
@@ -125,37 +87,12 @@ void UMicroscopeMicrobe::MicrobePress(const FGeometry& Geometry, const FPointerE
 	}
 }
 
-UImage* UMicroscopeMicrobe::GetVisibleMicrobe()
-{
-	if (Microbe->IsVisible())
-	{
-		return Microbe;
-	} else if (Microbe2->IsVisible())
-	{
-		return Microbe2;
-	} else if (Microbe3->IsVisible())
-	{
-		return Microbe3;
-	} else if (Microbe4->IsVisible())
-	{
-		return Microbe4;
-	} else if (Microbe5->IsVisible())
-	{
-		return Microbe5;
-	} else if (Microbe6->IsVisible())
-	{
-		return Microbe6;
-	} else
-	{
-		return nullptr;
-	}
-}
 
 void UMicroscopeMicrobe::IsMicrobeBad(UMicroscopeView* OwningWidget)
 {
 	if (bIsBad)
 	{
-		GetVisibleMicrobe()->SetColorAndOpacity(FLinearColor::Red);
+		Microbe->SetColorAndOpacity(FLinearColor::Red);
 	}
 	//Need to set the spawn handling on a small delay as otherwise, it does not register the viewport
 	//as being spawned in
@@ -172,7 +109,7 @@ void UMicroscopeMicrobe::MoveMicrobes(FVector2D MousePosition)
 	{
 		FVector2D CurrentMousePosition = UWidgetLayoutLibrary::GetMousePositionOnViewport(GetWorld());
 		FVector2D t = (CurrentMousePosition - MousePosition) / 20;
-		UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(GetVisibleMicrobe());
+		UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(Microbe);
 		FVector2D temp = CanvasPanel->GetPosition();
 		//This check stops the images from teleporting to the mouse position as well as limiting the speed
 		if (t < FVector2D(5, 5) && t > FVector2D(-5, -5))
@@ -187,7 +124,7 @@ void UMicroscopeMicrobe::SetRandomSpawnPoint()
 {
 	if (IsValid(Parent))
 	{
-		UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(GetVisibleMicrobe());
+		UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(Microbe);
 		CanvasPanel->SetPosition(FVector2D(UKismetMathLibrary::RandomIntegerInRange(0, Parent->GetDesiredSize().X), 
 		UKismetMathLibrary::RandomIntegerInRange(0, Parent->GetDesiredSize().Y)));
 	}

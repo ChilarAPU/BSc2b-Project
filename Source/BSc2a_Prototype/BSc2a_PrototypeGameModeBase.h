@@ -26,9 +26,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int AmountOfMinigamesCompleted;
 
-	//Will be used with UMicroscopeMicrobe to decide which microbe image it should show
-	int MicrobeValue;
-
 	bool bHasPlayerBeatMicroscope;
 
 	UFUNCTION(BlueprintCallable)

@@ -32,9 +32,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UUserWidget* BackgroundImage;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ExitButton;
-
 	//This will hold the value at which the microscope is no longer blurry. Will be between 0 - 1
 	UPROPERTY()
 	float ClearValue;
@@ -46,8 +43,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int AmountOfMicrobesToSpawn;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int AmountOfBadMicrobes;
+
 	//Used to know how many microbes have been removed from the scene
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int MicrobesRemoved;
 
 	UPROPERTY()

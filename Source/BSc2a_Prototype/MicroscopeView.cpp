@@ -30,8 +30,6 @@ void UMicroscopeView::NativeConstruct()
 	//Binding delegates
 	BlurSlider->OnValueChanged.AddDynamic(this, &UMicroscopeView::OnBlurValueChange);
 
-	ExitButton->OnClicked.AddDynamic(this, &UMicroscopeView::ExitView);
-
 	//UCanvasPanelSlot* CP = UWidgetLayoutLibrary::SlotAsCanvasSlot(MainView);
 	//MaxSize = CP->GetSize();
 
@@ -47,6 +45,7 @@ void UMicroscopeView::NativeConstruct()
 		if (i % 10 == 0)
 		{
 			NewMicrobe->bIsBad = true;
+			AmountOfBadMicrobes++;
 		}
 		NewMicrobe->IsMicrobeBad(this);
 		AllMicrobes.Emplace(NewMicrobe);
@@ -128,7 +127,6 @@ FReply UMicroscopeView::NativeOnMouseMove(const FGeometry& InGeometry, const FPo
 		{
 			UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(MainView);
 			FVector2D temp2 = UWidgetLayoutLibrary::GetMousePositionOnViewport(GetWorld()) - MousePos;
-			UE_LOG(LogTemp, Warning, TEXT("%f, %f"), temp2.X, temp2.Y);
 			FVector2D temp = CanvasPanel->GetPosition();
 			CanvasPanel->SetPosition((temp + temp2) / 10);
 		}

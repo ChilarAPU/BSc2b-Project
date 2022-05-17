@@ -38,6 +38,9 @@ public:
 	UPROPERTY()
 	UEndScreen* EndScreenRef;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundWave* ButtonClickSound;
+
 	UPROPERTY()
 	bool bALlowWin;
 

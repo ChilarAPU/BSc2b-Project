@@ -5,6 +5,7 @@
 
 #include "EndScreen.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/TextRenderComponent.h"
@@ -67,6 +68,7 @@ void AInGameTimer::SetTimerText(float DeltaTime)
 	{
 		if (LoseScreen)
 		{
+			UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 			UEndScreen* Local = Cast<UEndScreen>(CreateWidget(GetWorld(), LoseScreen));
 			Local->AddToViewport();
 			Local->LoseScreen->SetVisibility(ESlateVisibility::Visible);

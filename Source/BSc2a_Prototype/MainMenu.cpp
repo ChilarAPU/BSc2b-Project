@@ -33,6 +33,10 @@ void UMainMenu::NativeConstruct()
 
 void UMainMenu::StartGame()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	ACustomPlayer* Player = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	APlayerController* PlayerC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	UGameplayStatics::SetGamePaused(GetWorld(), false);
@@ -51,6 +55,10 @@ void UMainMenu::StartGame()
 
 void UMainMenu::SettingsPage()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	if (StartButton->Visibility == ESlateVisibility::Visible)
 	{
 		StartButton->SetVisibility(ESlateVisibility::Hidden);
@@ -65,6 +73,10 @@ void UMainMenu::SettingsPage()
 
 void UMainMenu::QuitGame()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	UKismetSystemLibrary::QuitGame(GetWorld(), UGameplayStatics::GetPlayerController(GetWorld(), 0), EQuitPreference::Quit, true);
 }
 

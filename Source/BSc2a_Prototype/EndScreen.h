@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* EndingText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundWave* ButtonClickSound;
+
 	UFUNCTION()
 	void QuitGame();
 };

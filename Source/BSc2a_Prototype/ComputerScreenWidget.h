@@ -42,6 +42,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* IncorrectText;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class USoundCue* ErrorSound;
+
 	/* the password the player is trying to match/find scattered around the room
 	 */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

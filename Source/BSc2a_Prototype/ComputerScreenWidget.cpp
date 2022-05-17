@@ -13,6 +13,7 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 #include "Types/SlateEnums.h"
 
 void UComputerScreenWidget::NativeConstruct()
@@ -84,6 +85,10 @@ void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type
 	} else
 	{
 		//Password is incorrect
+		if (ErrorSound)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), ErrorSound, 1, 1);
+		}
 		IncorrectText->SetVisibility(ESlateVisibility::Visible);
 		FTimerHandle UnusedHandle;
 		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &UComputerScreenWidget::IncorrectDisapear, 2.f, false);

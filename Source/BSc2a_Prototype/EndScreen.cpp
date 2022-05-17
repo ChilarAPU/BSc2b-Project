@@ -22,5 +22,9 @@ void UEndScreen::NativeConstruct()
 
 void UEndScreen::QuitGame()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	UKismetSystemLibrary::QuitGame(GetWorld(), UGameplayStatics::GetPlayerController(GetWorld(), 0), EQuitPreference::Quit, true);
 }

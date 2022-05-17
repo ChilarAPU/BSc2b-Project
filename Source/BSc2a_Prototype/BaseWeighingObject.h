@@ -24,6 +24,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Weight;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundWave* ScaleHitSound;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundWave* ScaleMissSound;
+
 	//Used to know when this object is currently being held by the player
 	bool bBeingClicked;
 

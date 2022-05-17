@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UCheckBox* BobbingCheck;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundWave* ButtonClickSound;
+
 	UFUNCTION()
 	void StartGame();
 

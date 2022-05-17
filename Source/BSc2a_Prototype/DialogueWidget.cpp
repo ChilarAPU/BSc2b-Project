@@ -38,6 +38,10 @@ void UDialogueWidget::NativeConstruct()
 void UDialogueWidget::EscapeClicked()
 {
 	//Give Control back to the player and remove the UI from the screen
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	APlayerController* PlayerC = UGameplayStatics::GetPlayerController(this, 0);
 	PlayerC->SetIgnoreMoveInput(false);
 	FInputModeGameOnly GameMode;
@@ -48,6 +52,10 @@ void UDialogueWidget::EscapeClicked()
 
 void UDialogueWidget::EndClicked()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	if (EndScreenRef)
 	{
 		EndScreenRef->AddToViewport();
@@ -60,6 +68,10 @@ void UDialogueWidget::EndClicked()
 
 void UDialogueWidget::WinClicked()
 {
+	if (ButtonClickSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
+	}
 	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	if (bALlowWin)
 	{

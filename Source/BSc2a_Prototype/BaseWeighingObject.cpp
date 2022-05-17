@@ -59,6 +59,17 @@ void ABaseWeighingObject::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 			Minigame->ChangeScaleAmount(Weight, GetClass());
 			//set remove weight to be true so that when we next pick it up, we know we want to remove it
 			bRemoveWeight = true;
+			if (ScaleHitSound)
+			{
+				UGameplayStatics::PlaySound2D(GetWorld(), ScaleHitSound);
+			}
+			
+		} else if (OtherComp == Minigame->ResetScale)
+		{
+			
+		} else
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), ScaleMissSound);
 		}
 	}
 }

@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* QuitButton;
 
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UTextBlock* EndingText;
+
 	UFUNCTION()
 	void QuitGame();
 };

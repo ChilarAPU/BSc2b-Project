@@ -51,7 +51,7 @@ ACustomPlayer::ACustomPlayer()
 	bInRangeOfInteractable = false;
 	NumberOfTasksCompleted = 0;
 	bRotateObject = false;
-	GetCharacterMovement()->MaxWalkSpeed = 200;
+	GetCharacterMovement()->MaxWalkSpeed = 400;
 	MainMenuOpen = false;
 }
 
@@ -392,10 +392,10 @@ void ACustomPlayer::HandAnimationSetup(float Axis)
 	//Set the playback rate to be faster during movement
 	if (Axis != 0)
 	{
-		HandTimeline.SetPlayRate(1);
+		HandTimeline.SetPlayRate(1.2);
 	} else if (Axis == 0)
 	{
-		HandTimeline.SetPlayRate(.5);
+		HandTimeline.SetPlayRate(.3);
 	}
 }
 

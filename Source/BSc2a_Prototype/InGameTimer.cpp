@@ -6,6 +6,7 @@
 #include "EndScreen.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 #include "Components/TextRenderComponent.h"
 
 // Sets default values
@@ -70,6 +71,8 @@ void AInGameTimer::SetTimerText(float DeltaTime)
 			Local->AddToViewport();
 			Local->LoseScreen->SetVisibility(ESlateVisibility::Visible);
 			bShouldClockBeCounting = false;
+			FString EndText = "How could one person, save the entire world? It was too late to think about that, the disease had progressed too far already and all that was left was to simply just try. But try as one might, in the end, it turned out to be too great of a responsibility for one. Whether it was lack of skill, cracking under the pressure or simply not being quick enough, ultimately the cure wasn’t created. There was nothing anyone could have done to change this. By now, resources and efforts had been exhausted, and the last chance missed. All one could do now, was wait for the impending destruction…";
+			Local->EndingText->SetText(FText::FromString(EndText));
 		}
 		
 	}

@@ -41,6 +41,8 @@ public:
 	UPROPERTY()
 	bool bALlowWin;
 
+	bool bFinishEarly;
+
 	//Text animation specific variables
 	FTimerHandle TextAnim;
 	FString InputText;

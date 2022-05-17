@@ -12,6 +12,12 @@ void UEndScreen::NativeConstruct()
 	Super::NativeConstruct();
 
 	QuitButton->OnClicked.AddDynamic(this, &UEndScreen::QuitGame);
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	FInputModeUIOnly UIOnly;
+	PC->SetShowMouseCursor(false);
+	PC->SetInputMode(UIOnly);
+	PC->SetShowMouseCursor(true);
+	
 }
 
 void UEndScreen::QuitGame()

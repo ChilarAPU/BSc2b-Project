@@ -23,7 +23,7 @@ void UComputerScreenWidget::NativeConstruct()
 	Password->OnTextCommitted.AddDynamic(this, &UComputerScreenWidget::PasswordCheck);
 
 	//default value
-	TargetPassword = "0123"; //Should get changed in widget blueprint
+	TargetPassword = "PLAGUE"; //Should get changed in widget blueprint
 
 	LoadingIcon->SetVisibility(ESlateVisibility::Hidden);
 	WelcomeText->SetVisibility(ESlateVisibility::Hidden);

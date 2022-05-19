@@ -31,7 +31,7 @@ ACustomPlayer::ACustomPlayer()
 	Camera->SetupAttachment(GetRootComponent());
 
 	PlayerHands = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerHands"));
-	PlayerHands->SetupAttachment(GetRootComponent());
+	PlayerHands->SetupAttachment(Camera);
 
 	Grabber = CreateDefaultSubobject<UGrabber>(TEXT("Grabber"));
 	Grabber->SetupAttachment(Camera);
@@ -51,8 +51,9 @@ ACustomPlayer::ACustomPlayer()
 	bInRangeOfInteractable = false;
 	NumberOfTasksCompleted = 0;
 	bRotateObject = false;
-	GetCharacterMovement()->MaxWalkSpeed = 400;
+	GetCharacterMovement()->MaxWalkSpeed = 500;
 	MainMenuOpen = false;
+	GetCharacterMovement()->MaxStepHeight = 100;
 }
 
 void ACustomPlayer::TimelineProgress(float Value)
@@ -63,9 +64,14 @@ void ACustomPlayer::TimelineProgress(float Value)
 
 void ACustomPlayer::HandTimelineProgress(float Value)
 {
+	//A temporary fix but it stops the hands from moving offscreen when the player moves up or down on the ZAxis.
+	//Does make the hands higher up than I originally wanted them to but is something I can live with
+	EndLoc.Z = (Camera->GetComponentLocation().Z - 15) + ZOffset;
+	StartLoc.Z = Camera->GetComponentLocation().Z - 15;
 	FVector NewLoc = FMath::Lerp(StartLoc, EndLoc, Value);
 	PlayerHands->SetWorldLocation(FVector(PlayerHands->GetComponentLocation().X, PlayerHands->GetComponentLocation().Y, NewLoc.Z));
 	//Match up footsteps with the bobbing animation. -1 equals the lowest point of the bob
+	
 
 	bool bAtLowestPointOfAnim = FMath::IsNearlyEqual(Value, -1.f, .1f);
 	if (!bPlayedFootstep && bAtLowestPointOfAnim)
@@ -85,8 +91,6 @@ void ACustomPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	StartingRollValue = Camera->GetComponentRotation().Roll;
-
-	
 	
 }
 
@@ -239,7 +243,8 @@ void ACustomPlayer::Interact()
 		{
 			ABSc2a_PrototypeGameModeBase* GameMode = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 			//Code relevant to all interactions goes here
-			if (!GameMode->bHasPlayerBeatMicroscope)
+			
+			if (Cast<AEndGoal>(OutHit.GetActor()))
 			{
 				GetCharacterMovement()->Velocity = FVector();
 				PlayerC->SetIgnoreMoveInput(true);
@@ -247,21 +252,25 @@ void ACustomPlayer::Interact()
 				DialougeOpen.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 				PlayerC->SetShowMouseCursor(true);
 				PlayerC->SetInputMode(DialougeOpen);
-			}
-			
-			
-			if (Cast<AEndGoal>(OutHit.GetActor()))
-			{
 				SpawnDialogueUI(PlayerC);
 			}
 			else if (AComputerMinigame* Computer = Cast<AComputerMinigame>(OutHit.GetActor()))
 			{
+				GetCharacterMovement()->Velocity = FVector();
+				PlayerC->SetIgnoreMoveInput(true);
+				FInputModeUIOnly DialougeOpen;
+				DialougeOpen.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+				PlayerC->SetShowMouseCursor(true);
+				PlayerC->SetInputMode(DialougeOpen);
 				ChangeViewTarget(Computer, PlayerC);
 			}
 			else if (AWeighingMinigame* Weigh = Cast<AWeighingMinigame>(OutHit.GetActor()))
 			{
 				ChangeViewTarget(Weigh, PlayerC);
 				//Change input mode for only this interaction as it needs the mouse cursor events
+				GetCharacterMovement()->Velocity = FVector();
+				PlayerC->SetIgnoreMoveInput(true);
+				PlayerC->SetShowMouseCursor(true);
 				FInputModeGameAndUI AllowCursor;
 				PlayerC->SetInputMode(AllowCursor);
 			}
@@ -269,6 +278,12 @@ void ACustomPlayer::Interact()
 			{
 				if (!GameMode->bHasPlayerBeatMicroscope)
 				{
+					GetCharacterMovement()->Velocity = FVector();
+					PlayerC->SetIgnoreMoveInput(true);
+					FInputModeUIOnly DialougeOpen;
+					DialougeOpen.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+					PlayerC->SetShowMouseCursor(true);
+					PlayerC->SetInputMode(DialougeOpen);
 					ChangeViewTarget(Micro, PlayerC);
 					//Wait for the amount of time the camera blend takes to finish, then run the function
 					Micro->TimerDel.BindUFunction(Micro, FName("SpawnWidget"), PlayerC);
@@ -431,7 +446,6 @@ void ACustomPlayer::StartHandTimeline(float Axis, float ZAmount)
 		TimelineProgress.BindUFunction(this, FName("HandTimelineProgress"));
 		HandTimeline.AddInterpFloat(HandFloat, TimelineProgress);
 		HandTimeline.SetLooping(true);
-
 		StartLoc = EndLoc = PlayerHands->GetComponentLocation();
 		EndLoc.Z += ZAmount;
 		HandTimeline.PlayFromStart();

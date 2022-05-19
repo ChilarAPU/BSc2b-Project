@@ -56,9 +56,7 @@ void UComputerScreenWidget::ExitComputer()
 	PlayerC->SetInputMode(GameOpen);
 	
 	PlayerPawn->ChangeViewTarget(PlayerPawn, PlayerC);
-
-	ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
-	GM->AddToMinigameAmount();
+	
 }
 
 void UComputerScreenWidget::IncorrectDisapear()
@@ -82,6 +80,8 @@ void UComputerScreenWidget::PasswordCheck(const FText& InText, ETextCommit::Type
 		LoadingIcon->SetVisibility(ESlateVisibility::Visible);
 		WelcomeText->SetVisibility(ESlateVisibility::Visible);
 		ExitComputer();
+		ABSc2a_PrototypeGameModeBase* GM = Cast<ABSc2a_PrototypeGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+		GM->AddToMinigameAmount();
 	} else
 	{
 		//Password is incorrect

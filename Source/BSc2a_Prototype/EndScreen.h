@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* EndingText;
 
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UImage* ZombieLoseScreen;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundWave* ButtonClickSound;
 

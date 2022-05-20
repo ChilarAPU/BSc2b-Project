@@ -95,7 +95,7 @@ void UDialogueWidget::WinClicked()
 		if (bFinishEarly)
 		{
 			EndScreenRef->AddToViewport();
-			EndScreenRef->LoseScreen->SetVisibility(ESlateVisibility::Visible);
+			EndScreenRef->ZombieLoseScreen->SetVisibility(ESlateVisibility::Visible);
 			FString EndingText = "The efforts put into creating the cure were incomparable to anything else. Truly, the cure was in reaching distance, so close to being held and used for the greater good. Yet, the pressure was too much, and the surrounding destruction caused by the apocalypse was getting out of hand. Time was not a luxury anyone had, especially when creating the cure, and so, everything that had to be done, ended up being rushed. What seemed to be the medicine for all the problems in the world, actually turned out to be what made it worse. Like fuel to the fire, the rushed cure that was produced only helped in the progression of the apocalypse, creating new strains, arguably more deadly and violent than the previous";
 			EndScreenRef->EndingText->SetText(FText::FromString(EndingText));
 		} else

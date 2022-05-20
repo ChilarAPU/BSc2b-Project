@@ -55,6 +55,9 @@ public:
 
 	UPROPERTY()
 	bool bRotateObject;
+
+	UPROPERTY()
+	bool bFirstPlayThrough;
 	
 	//Tilting Timeline specific
 	UFUNCTION()

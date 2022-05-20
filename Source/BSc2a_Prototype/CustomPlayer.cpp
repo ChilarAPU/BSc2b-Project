@@ -54,6 +54,7 @@ ACustomPlayer::ACustomPlayer()
 	GetCharacterMovement()->MaxWalkSpeed = 500;
 	MainMenuOpen = false;
 	GetCharacterMovement()->MaxStepHeight = 100;
+	bFirstPlayThrough = true;
 }
 
 void ACustomPlayer::TimelineProgress(float Value)
@@ -326,7 +327,7 @@ void ACustomPlayer::LineTraceFromCamera(FHitResult& OutHit)
 	GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocation, ECC_Visibility, CollisionParams);
 	
 	//Remove during building as its only for debugging
-	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Blue, false, 2.f);
+	//DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Blue, false, 2.f);
 }
 
 void ACustomPlayer::Grab()

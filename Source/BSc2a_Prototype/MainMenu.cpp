@@ -7,6 +7,7 @@
 #include "CustomPlayer.h"
 #include "Components/Button.h"
 #include "Components/CheckBox.h"
+#include "Components/Image.h"
 #include "Kismet/GameplayStatics.h"
 
 void UMainMenu::NativeConstruct()
@@ -37,6 +38,32 @@ void UMainMenu::StartGame()
 	{
 		UGameplayStatics::PlaySound2D(GetWorld(), ButtonClickSound);
 	}
+	ACustomPlayer* Player = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (Player->bFirstPlayThrough)
+	{
+		/*TutorialImage->SetVisibility(ESlateVisibility::Visible);
+		FTimerHandle OutHandle;
+		Player->bFirstPlayThrough = false;
+		GetWorld()->GetTimerManager().SetTimer(OutHandle, this, &UMainMenu::StartGameContinued, 5.f, false, 0);
+		*/
+		TempStartFunction();
+	} else
+	{
+		StartGameContinued();
+	}
+	
+}
+
+void UMainMenu::TempStartFunction()
+{
+	TutorialImage->SetVisibility(ESlateVisibility::Visible);
+	ACustomPlayer* Player = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Player->bFirstPlayThrough = false;
+}
+
+void UMainMenu::StartGameContinued()
+{
+	//TutorialImage->SetVisibility(ESlateVisibility::Hidden);
 	ACustomPlayer* Player = Cast<ACustomPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	APlayerController* PlayerC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	UGameplayStatics::SetGamePaused(GetWorld(), false);

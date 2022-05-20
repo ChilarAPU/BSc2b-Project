@@ -108,11 +108,11 @@ void UMicroscopeMicrobe::MoveMicrobes(FVector2D MousePosition)
 	if (!bFirstRunThrough)
 	{
 		FVector2D CurrentMousePosition = UWidgetLayoutLibrary::GetMousePositionOnViewport(GetWorld());
-		FVector2D t = (CurrentMousePosition - MousePosition) / 20;
+		FVector2D t = (CurrentMousePosition - MousePosition) / 5;
 		UCanvasPanelSlot* CanvasPanel = UWidgetLayoutLibrary::SlotAsCanvasSlot(Microbe);
 		FVector2D temp = CanvasPanel->GetPosition();
 		//This check stops the images from teleporting to the mouse position as well as limiting the speed
-		if (t < FVector2D(5, 5) && t > FVector2D(-5, -5))
+		if (t < FVector2D(20, 20) && t > FVector2D(-20, -20))
 		{
 			CanvasPanel->SetPosition(temp + t);
 		}
